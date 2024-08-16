@@ -23,7 +23,7 @@ func main() {
 	if len(os.Args) == 2 {
 		nextToken = os.Args[1]
 		var err error
-		offset, err = folders.DecodeToken(nextToken)
+		offset, err = folders.
 		if err != nil {
 			fmt.Printf("Error decoding token: %v\n", err)
 			return
