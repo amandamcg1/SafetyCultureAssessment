@@ -1,4 +1,4 @@
-module github.com/georgechieng-sc/interns-2022
+module github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders
 
 go 1.23.0
 

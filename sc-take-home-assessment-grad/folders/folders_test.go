@@ -3,12 +3,9 @@ package folders_test
 import (
 	"testing"
 
-	// "github.com/georgechieng-sc/interns-2022/folders"
-	// "github.com/georgechieng-sc/interns-2022/folders"
-	"github.com/georgechieng-sc/interns-2022/folders"
+	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders/folders"
 	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
-	// "github.com/georgechieng-sc/interns-2022/folders"
 )
 
 func Test_GetAllFolders(t *testing.T) {
