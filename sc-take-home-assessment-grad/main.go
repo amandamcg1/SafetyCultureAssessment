@@ -10,16 +10,18 @@ import (
 
 func main() {
 
+	// Check if more than one argument is provided; if so, print usage instructions and exit.
 	if len(os.Args) > 2 {
 		fmt.Println("Usage: go run main.go [token]")
 		return
 	}
 
 	orgID := uuid.FromStringOrNil(folders.DefaultOrgID)
-	limit := 10
+	limit := 10 // Change Limit for more or less folders
 	nextToken := ""
 	offset := 0
 
+	// If a token is provided as a command-line argument, decode it to get the offset.
 	if len(os.Args) == 2 {
 		nextToken = os.Args[1]
 		var err error
@@ -30,6 +32,7 @@ func main() {
 		}
 	}
 
+	// Create a request for paginated folder fetching with the specified parameters.
 	req := &folders.PaginatedFetchFolderRequest{
 		OrgID:     orgID,
 		Limit:     limit,
@@ -37,19 +40,24 @@ func main() {
 		NextToken: nextToken,
 	}
 
+	// Fetch the paginated folders using the request parameters.
 	res, err := folders.PaginatedGetAllFolders(req)
 	if err != nil {
 		fmt.Printf("Error fetching folders: %v\n", err)
 		return
 	}
 
+	// Print the list of folders.
 	fmt.Printf("Folders:\n")
 	for i, folder := range res.Folders {
 		fmt.Printf("Folder %d: %s\n", offset+i+1, folder.Name)
 	}
-	fmt.Printf("Token: %s\n", res.NextToken)
 
-	if res.NextToken == "" {
+	// Print the next token if there are more folders to fetch.
+	// Print a message indicating the end of data if no next token is provided.
+	if res.NextToken != "" {
+		fmt.Printf("Token: %s\n", res.NextToken)
+	} else {
 		fmt.Println("End of data.")
 	}
 }

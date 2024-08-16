@@ -8,17 +8,25 @@ import (
 	"github.com/gofrs/uuid"
 )
 
+// This file handles paginated folder retrieval. The `PaginatedGetAllFolders` function fetches a specific slice
+// of folders based on the request, including the offset and limit. It determines which folders to return and
+// creates a new token if there's more data to fetch. `PaginatedFetchAllFoldersByOrgID` simulates getting folders
+// filtered by the orgID. Tokens are just encoded integers that help keep track of where you are in the data.
+// `generateNextToken` and `DecodeToken` are used to create and read these tokens. This setup helps break down
+// large amounts of data into smaller, manageable chunks.
+
 func PaginatedGetAllFolders(req *PaginatedFetchFolderRequest) (*PaginatedFetchFolderResponse, error) {
 
 	// Fetch all folders by OrgID
 	r, err := PaginatedFetchAllFoldersByOrgID(req.OrgID)
 	if err != nil {
-		return nil, err
+		return nil, err // Return error if folder retrieval fails
 	}
 
 	totalFolders := len(r)
 	offset := req.Offset
 
+	// If a token is provided, decode it to get the offset
 	if req.NextToken != "" {
 		var err error
 		offset, err = DecodeToken(req.NextToken)
@@ -27,6 +35,7 @@ func PaginatedGetAllFolders(req *PaginatedFetchFolderRequest) (*PaginatedFetchFo
 		}
 	}
 
+	// If the offset is beyond the total number of folders, return an empty result.
 	if offset >= totalFolders {
 		return &PaginatedFetchFolderResponse{
 			Folders:   []*Folder{},
@@ -35,6 +44,7 @@ func PaginatedGetAllFolders(req *PaginatedFetchFolderRequest) (*PaginatedFetchFo
 		}, nil
 	}
 
+	// Determine the end index for the current page of results.
 	end := offset + req.Limit
 	if end > totalFolders {
 		end = totalFolders
@@ -42,10 +52,12 @@ func PaginatedGetAllFolders(req *PaginatedFetchFolderRequest) (*PaginatedFetchFo
 
 	paginatedFolders := r[offset:end]
 	newToken := ""
+	// If there are more folders, generate a new token for the next page.
 	if end < totalFolders {
 		newToken = generateNextToken(end)
 	}
 
+	// Return the paginated results and the token for the next page.
 	return &PaginatedFetchFolderResponse{
 		Folders:   paginatedFolders,
 		Total:     totalFolders,
