@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders"
+	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders/folders"
 	"github.com/gofrs/uuid"
 )
 
@@ -23,7 +23,7 @@ func main() {
 	if len(os.Args) == 2 {
 		nextToken = os.Args[1]
 		var err error
-		offset, err = folders.
+		offset, err = folders.de
 		if err != nil {
 			fmt.Printf("Error decoding token: %v\n", err)
 			return
