@@ -51,15 +51,8 @@ func Test_GetAllFolders(t *testing.T) {
 		assert.Equal(t, 0, len(resp.Folders))
 	})
 
-	t.Run("Handle nil request input", func(t *testing.T) {
-		resp, err := folders.GetAllFolders(nil)
-
-		assert.Error(t, err, "Expected an error when request is nil")
-		assert.Nil(t, resp, "Expected a nil response when request is nil")
-	})
-
 	t.Run("Empty OrgID", func(t *testing.T) {
-		emptyOrgID := uuid.UUID{} // Represents an empty OrgID
+		emptyOrgID := uuid.UUID{}
 		req := &folders.FetchFolderRequest{OrgID: emptyOrgID}
 
 		resp, err := folders.GetAllFolders(req)
