@@ -3,7 +3,7 @@ package folders_test
 import (
 	"testing"
 
-	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders/folders"
+	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders"
 	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
 )

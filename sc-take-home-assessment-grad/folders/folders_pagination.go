@@ -1,6 +1,10 @@
 package folders
 
 import (
+	"encoding/hex"
+	"fmt"
+	"strconv"
+
 	"github.com/gofrs/uuid"
 )
 
@@ -17,7 +21,7 @@ func PaginatedGetAllFolders(req *PaginatedFetchFolderRequest) (*PaginatedFetchFo
 
 	if req.NextToken != "" {
 		var err error
-		offset, err = decodeToken(req.NextToken)
+		offset, err = DecodeToken(req.NextToken)
 		if err != nil {
 			return nil, err
 		}
@@ -59,4 +63,20 @@ func PaginatedFetchAllFoldersByOrgID(orgID uuid.UUID) ([]*Folder, error) {
 		}
 	}
 	return resFolder, nil
+}
+
+func generateNextToken(offset int) string {
+	return hex.EncodeToString([]byte(fmt.Sprintf("%d", offset)))
+}
+
+func DecodeToken(token string) (int, error) {
+	data, err := hex.DecodeString(token)
+	if err != nil {
+		return 0, err
+	}
+	offset, err := strconv.Atoi(string(data))
+	if err != nil {
+		return 0, err
+	}
+	return offset, nil
 }
