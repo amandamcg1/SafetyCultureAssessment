@@ -26,6 +26,7 @@ import (
 // The conversion from a slice of pointers to a slice of structs (f) and then back to a slice of pointers (fp) is redundant. We can skip the intermediate conversion to a slice of structs.
 // The error returned by FetchAllFoldersByOrgID is currently ignored. It should be handled appropriately.
 // The unnecessary variable initializations (f1, fs) can be removed to clean up the code.
+// FetchFolderRequest represents the request to fetch folders
 
 func GetAllFolders(req *FetchFolderRequest) (*FetchFolderResponse, error) {
 	// Fetch all folders by OrgID
