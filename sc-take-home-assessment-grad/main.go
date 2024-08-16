@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders/folders"
+	"github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders"
 	"github.com/gofrs/uuid"
 )
 

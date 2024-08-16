@@ -1,4 +1,4 @@
-module github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad/folders
+module github.com/amandamcg1/SafetyCultureAssessment/sc-take-home-assessment-grad
 
 go 1.23.0
 
